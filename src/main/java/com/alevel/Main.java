@@ -7,11 +7,25 @@ public class Main {
 
         MyMath m = new MyMath();
         System.out.println(m.toString());
-        Pow(m);
+        pow(m);
         System.out.println(m.toString());
     }
 
-    public static void Pow(MyMath myMath) throws IllegalAccessException {
+    public static boolean setAccess(Field field,MyMath myMath){
+        if (!field.canAccess(myMath))
+            if (field.trySetAccessible()) {
+                field.setAccessible(true);
+                return true;
+            }
+        return false;
+    }
+
+    public static void setBack(Field field,boolean needToChangeBack){
+        if (needToChangeBack)
+            field.setAccessible(false);
+    }
+
+    public static void pow(MyMath myMath) throws IllegalAccessException {
 
         Field[] fields = myMath.getClass().getDeclaredFields();
         for (Field field:fields) {
@@ -23,66 +37,66 @@ public class Main {
 
                 Class<?> type = field.getType();
                 if (type.equals(byte.class)) {
-                    field.setAccessible(true);
+                    boolean needToChangeBack = setAccess(field,myMath);
                     byte sum = (byte) field.get(myMath);
                     field.set(myMath,sum*sum);
-                    field.setAccessible(false);
+                    setBack(field,needToChangeBack);
 
                 } else if (type.equals(int.class)) {
-                    field.setAccessible(true);
+                    boolean needToChangeBack = setAccess(field,myMath);
                     int sum = (int) field.get(myMath);
                     field.set(myMath,sum*sum);
-                    field.setAccessible(false);
+                    setBack(field,needToChangeBack);
 
                 } else if (type.equals(long.class)) {
-                    field.setAccessible(true);
+                    boolean needToChangeBack = setAccess(field,myMath);
                     long sum = (long) field.get(myMath);
                     field.set(myMath,sum*sum);
-                    field.setAccessible(false);
+                    setBack(field,needToChangeBack);
 
                 } else if (type.equals(float.class)) {
-                    field.setAccessible(true);
+                    boolean needToChangeBack = setAccess(field,myMath);
                     float sum = (float) field.get(myMath);
                     field.set(myMath,sum*sum);
-                    field.setAccessible(false);
+                    setBack(field,needToChangeBack);
 
                 } else if (type.equals(double.class)) {
-                    field.setAccessible(true);
+                    boolean needToChangeBack = setAccess(field,myMath);
                     double sum = (double) field.get(myMath);
                     field.set(myMath,sum*sum);
-                    field.setAccessible(false);
+                    setBack(field,needToChangeBack);
 
                 } else if (Number.class.isAssignableFrom(type)) {
 
                     if (type.equals(Byte.class)) {
-                        field.setAccessible(true);
+                        boolean needToChangeBack = setAccess(field,myMath);
                         Byte sum = (Byte) field.get(myMath);
                         field.set(myMath,sum*sum);
-                        field.setAccessible(false);
+                        setBack(field,needToChangeBack);
 
                     } else if (type.equals(Integer.class)) {
-                        field.setAccessible(true);
+                        boolean needToChangeBack = setAccess(field,myMath);
                         Integer sum = (Integer) field.get(myMath);
                         field.set(myMath,sum*sum);
-                        field.setAccessible(false);
+                        setBack(field,needToChangeBack);
 
                     } else if (type.equals(Long.class)) {
-                        field.setAccessible(true);
+                        boolean needToChangeBack = setAccess(field,myMath);
                         Long sum = (Long) field.get(myMath);
                         field.set(myMath,sum*sum);
-                        field.setAccessible(false);
+                        setBack(field,needToChangeBack);
 
                     } else if (type.equals(Float.class)) {
-                        field.setAccessible(true);
+                        boolean needToChangeBack = setAccess(field,myMath);
                         Float sum = (Float) field.get(myMath);
                         field.set(myMath,sum*sum);
-                        field.setAccessible(false);
+                        setBack(field,needToChangeBack);
 
                     } else if (type.equals(Double.class)) {
-                        field.setAccessible(true);
+                        boolean needToChangeBack = setAccess(field,myMath);
                         Double sum = (Double) field.get(myMath);
                         field.set(myMath,sum*sum);
-                        field.setAccessible(false);
+                        setBack(field,needToChangeBack);
                     }
                 }
             }
